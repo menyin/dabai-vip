@@ -1,0 +1,67 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.1.RELEASE'
+	}
+	repositories {
+		maven {url "http://maven.aliyun.com/nexus/content/groups/public"}
+		mavenCentral()
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+plugins {
+	id 'java'
+	id 'idea'
+}
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'com.gupao.edu.vip'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+//所有项目的通用配置
+allprojects {
+	apply plugin: 'java'
+	version = '1.0'
+
+}
+
+subprojects{
+
+}
+
+dependencies {
+	implementation('org.springframework.boot:spring-boot-starter-web')
+	testImplementation('org.springframework.boot:spring-boot-starter-test')
+}
+
+/**
+ * 配置阶段开始前的监听
+ */
+this.beforeEvaluate {
+	println '配置开始前'
+}
+
+/**
+ * 配置阶段开始后的监听
+ */
+this.afterEvaluate {
+	println '配置完成后'
+}
+
+/**
+ * 执行完成的监听
+ */
+this.gradle.buildFinished {
+	println '执行阶段完毕'
+}
+

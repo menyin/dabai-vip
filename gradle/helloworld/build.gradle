@@ -1,0 +1,53 @@
+group 'com.gupao.edu.vip'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+//task sourceSets {
+//    main {
+//        java {
+//            srcDir 'src/javademo' // 指定源码目录
+//        }
+//        resources {
+//            srcDir 'src/res' //资源目录
+//        }
+//    }
+//
+//}
+
+def createDir = {
+    path ->
+      File dir = new File(path)
+      if(!dir.exists()){
+          dir.mkdirs()
+      }
+}
+
+task createJavaDir() {
+    def paths = ['src/main/java','src/main/resources',
+                 'src/test/java',
+             'src/test/resources']
+    //在任务执行之前运行
+    doFirst{
+        paths.forEach(createDir)
+    }
+}
+
+task createWebDir(){
+    def paths = ['src/main/webapp','src/test/webapp']
+    dependsOn 'createJavaDir'
+    doLast{
+         paths.forEach(createDir)
+    }
+}
+
+

@@ -1,0 +1,5 @@
+rootProject.name = 'studygradle'
+include 'base'
+include 'data'
+include 'web'
+

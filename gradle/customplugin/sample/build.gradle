@@ -1,0 +1,13 @@
+buildscript {
+    repositories {
+        maven {
+            url uri('../gupao')
+        }
+    }
+
+    dependencies {
+        classpath group: 'com.gupao.edu.vip',
+                  name:'customplugin',
+                  version:'1.00.'
+    }
+}
