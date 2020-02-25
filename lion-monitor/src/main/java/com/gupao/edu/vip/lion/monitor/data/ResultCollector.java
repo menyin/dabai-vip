@@ -5,6 +5,7 @@ import com.gupao.edu.vip.lion.monitor.quota.impl.*;
 import com.gupao.edu.vip.lion.monitor.service.ThreadPoolManager;
 
 /**
+ * cny_note 各种jvm相关的信息的收集器
  */
 public class ResultCollector {
     private final JVMInfo jvmInfo;
@@ -14,11 +15,11 @@ public class ResultCollector {
     private final JVMThreadPool jvmThreadPool;
 
     public ResultCollector(ThreadPoolManager threadPoolManager) {
-        this.jvmInfo = new JVMInfo();
-        this.jvmgc = new JVMGC();
-        this.jvmMemory = new JVMMemory();
-        this.jvmThread = new JVMThread();
-        this.jvmThreadPool = new JVMThreadPool(threadPoolManager);
+        this.jvmInfo = new JVMInfo();//cny_note jvminfo监控
+        this.jvmgc = new JVMGC();//cny_note GC监控
+        this.jvmMemory = new JVMMemory();//cny_note 内存监控
+        this.jvmThread = new JVMThread();//cny_note 线程监控
+        this.jvmThreadPool = new JVMThreadPool(threadPoolManager);//cny_note 线程池监控
     }
 
     public MonitorResult collect() {

@@ -9,6 +9,9 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ScheduledExecutorService;
 
+/**
+ * cny_note 线程池统一管理，统一命名规范，参数差异化，使得MonitorService里可以对系统中所有线程池进行监控信息收集
+ */
 public final class ThreadPoolManager {
 
     private final ExecutorFactory executorFactory = ExecutorFactory.create();//cny_note executor工厂
@@ -38,6 +41,11 @@ public final class ThreadPoolManager {
                 , s -> executorFactory.get(ExecutorFactory.ACK_TIMER));
     }
 
+    /**
+     * cny_note 手动注册自己的线程池
+     * @param name
+     * @param executor
+     */
     public void register(String name, Executor executor) {
         Objects.requireNonNull(name);
         Objects.requireNonNull(executor);

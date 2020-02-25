@@ -18,7 +18,7 @@ public interface Service {
      */
     void stop(Listener listener);
 
-    CompletableFuture<Boolean> start();//cny_note 无论是同步或异步都可以用
+    CompletableFuture<Boolean> start();//cny_note 无论是同步或异步都可以用，
 
     CompletableFuture<Boolean> stop();//cny_note 无论是同步或异步都可以用
 

@@ -79,7 +79,7 @@ public class MonitorService extends BaseService implements Monitor, Runnable {
 
     @Override
     protected void doStop(Listener listener) throws Throwable {
-        if (thread != null && thread.isAlive()) thread.interrupt();
+        if (thread != null && thread.isAlive()) thread.interrupt();//cny_note 防止当started标志位设置为false后还有一些代码没执行完阻塞了之类的
         listener.onSuccess();
     }
 

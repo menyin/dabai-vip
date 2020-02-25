@@ -27,7 +27,10 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static com.gupao.edu.vip.lion.tools.Utils.useNettyEpoll;
 
-
+/**
+ * cny_note 在NettyTCPServer基类中规定了Netty服务的基本状态，并才其生命周期不同阶段原子性的去改变这个状态
+ *          ？？可是为什么要在内部记录这个状态，似乎没有被外部用到
+ */
 public abstract class NettyTCPServer extends BaseService implements Server {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());

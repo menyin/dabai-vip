@@ -73,7 +73,8 @@ public final class ConnectionServer extends NettyTCPServer {
         messageDispatcher.register(Command.FAST_CONNECT, () -> new FastConnectHandler(lionServer));
         messageDispatcher.register(Command.PUSH, PushHandlerFactory::create); //？？接收骑手用户推送的消息 ？这种消息应该是商家推送过来的 ！！是骑手发送的消息，因为商家发送的应该是网关服务接收的。
         messageDispatcher.register(Command.ACK, () -> new AckHandler(lionServer)); //？？这个消息类型是做什么用的 ！骑手客户端接收到推送消息后给服务端返回的应答消息
-        messageDispatcher.register(Command.HTTP_PROXY, () -> new HttpProxyHandler(lionServer), CC.lion.http.proxy_enabled);//？？ TODO 待研究
+        messageDispatcher.register(Command.HTTP_PROXY, () -> new HttpProxyHandler(lionServer), CC.lion.http.proxy_enabled);//cny_note 在HttpProxyHandler中会通过本地的NettyHttpClient服务做http代理
+
 
         if (CC.lion.net.traffic_shaping.connect_server.enabled) {//启用流量整形，限流  详见简书 https://www.jianshu.com/p/bea1b4ea8402
             trafficShapingExecutor = Executors.newSingleThreadScheduledExecutor(new NamedPoolThreadFactory(T_TRAFFIC_SHAPING));

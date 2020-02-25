@@ -19,10 +19,16 @@ import static com.gupao.edu.vip.lion.tools.thread.ThreadNames.*;
 
 /**
  * 此线程池可伸缩，线程空闲一定时间后回收，新请求重新创建线程
+ * cny_note 线程池工厂
  */
 @Spi(order = 1)
 public final class ServerExecutorFactory extends CommonExecutorFactory {
 
+    /**
+     * cny_note 根据不同的业务类型，获取不同的线程池
+     * @param name
+     * @return
+     */
     @Override
     public Executor get(String name) {
         final ThreadPoolConfig config;
@@ -51,7 +57,7 @@ public final class ServerExecutorFactory extends CommonExecutorFactory {
                 return executor;
             }
             default:
-                return super.get(name);
+                return super.get(name);//复用了父类的逻辑
         }
 
         return get(config);

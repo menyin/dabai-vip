@@ -114,7 +114,7 @@ public final class PushCenter extends BaseService implements MessagePusher {
         }
 
         @Override
-        public void addTask(PushTask task) {
+        public void addTask(PushTask task) {//cny_note实际上在执行该task时是获取task对应的connection里的channel的eventLoop对应的线程执行任务
             task.getExecutor().execute(task);//？？这个代码感觉不是很符合接口职责单一原则，因为task里面科等用到了消息的信息
         }
 

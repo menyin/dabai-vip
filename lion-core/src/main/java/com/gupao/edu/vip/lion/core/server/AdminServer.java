@@ -13,6 +13,9 @@ import io.netty.handler.codec.Delimiters;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 
+/**
+ * cny_note 可直接用telnet连接到该服务，然后发送字符串指令进行相关操作
+ */
 public final class AdminServer extends NettyTCPServer {
 
     private AdminHandler adminHandler;

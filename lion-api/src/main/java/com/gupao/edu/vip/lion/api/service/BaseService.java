@@ -28,7 +28,7 @@ public abstract class BaseService implements Service {
                 // 而toStart方法里的最后又会调用包装后的listener.onSuccess，onSuccess里会执行complete去触发CompletableFuture类的完成事件
                 // 注意ZKClient#doStart里会先执行完一些阻塞的耗时的操作后，然后再执行listener.onSuccess，里面会执行complete去触发CompletableFuture类的完成事件
                 // function.apply(listener)执行的就是上述逻辑，
-                function.apply(listener); //cny_note 这句代码其实是CompletableFuture实例实现promise的应用。
+                function.apply(listener); //cny_note 此处实际上是传递listener到子类doStart并执行，doStart里会根据自己服务启动情况调用listener.onSuccess,从而触发CompletableFuture相关链路。
                 listener.monitor(this);//cny_note 这句主要用CompletableFuture实例的线程执行了一个监控任务，用于超时未完成服务启动则直接抛异常，并调用listener.onFailure()
             } catch (Throwable e) {
                 listener.onFailure(e);
@@ -47,7 +47,7 @@ public abstract class BaseService implements Service {
         FutureListener listener = wrap(l);
         if (started.compareAndSet(true, false)) {
             try {
-                function.apply(listener);//？？感觉这个有点过度设计
+                function.apply(listener);//？？感觉这个有点过度设计,实际上就是调用本类或子类的doStop
                 listener.monitor(this);//主要用于异步，否则应该放置在function.apply(listener)之前
             } catch (Throwable e) {
                 listener.onFailure(e);

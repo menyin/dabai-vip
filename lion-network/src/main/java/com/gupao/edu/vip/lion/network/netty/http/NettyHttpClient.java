@@ -32,6 +32,7 @@ import static io.netty.handler.codec.http.HttpHeaderNames.HOST;
 import static io.netty.handler.codec.http.HttpHeaderValues.KEEP_ALIVE;
 
 /**
+ * cny_note 这个实际上就是一个netty客户端做的http请求的代理服务，其中在request(RequestContext context)方法中发送请求，在netty的业务handler中收到http目标响应的报文
  * Netty的一个Bootstrap是可以关联多个channel的，
  * 本Client采用的就是这种模式，在种模式下如果Handler添加了@ChannelHandler.Sharable
  * 注解的话，要特殊处理，因为这时的client和handler是被所有请求共享的。

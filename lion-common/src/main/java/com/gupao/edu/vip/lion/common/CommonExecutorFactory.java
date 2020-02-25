@@ -21,8 +21,7 @@ import static com.gupao.edu.vip.lion.tools.thread.ThreadNames.T_EVENT_BUS;
 import static com.gupao.edu.vip.lion.tools.thread.ThreadNames.T_PUSH_CLIENT_TIMER;
 
 /**
- *
- *
+ * cny_note 线程池工厂,分门别类只为了监控模块对线程池进行监控
  */
 public class CommonExecutorFactory implements ExecutorFactory {
     protected Executor get(ThreadPoolConfig config) {
@@ -32,13 +31,13 @@ public class CommonExecutorFactory implements ExecutorFactory {
         int keepAliveSeconds = config.getKeepAliveSeconds();
         BlockingQueue<Runnable> queue = config.getQueue();
 
-        return new DefaultExecutor(corePoolSize
+        return new DefaultExecutor(corePoolSize//cny_note 最终还是通过JUC的ThreadPoolExecutor去构造线程池
                 , maxPoolSize
                 , keepAliveSeconds
                 , TimeUnit.SECONDS
                 , queue
                 , new NamedPoolThreadFactory(name)
-                , new DumpThreadRejectedHandler(config));
+                , new DumpThreadRejectedHandler(config));//cny_note 任务被拒的回调
     }
 
     @Override

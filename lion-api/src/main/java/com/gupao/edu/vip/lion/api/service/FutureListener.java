@@ -28,7 +28,7 @@ public class FutureListener extends CompletableFuture<Boolean> implements Listen
 
     @Override
     public void onSuccess(Object... args) {
-        if (isDone()) return;// 防止Listener被重复执行
+        if (isDone()) return;// 防止Listener被重复执行 cny_note 当complete()已经执行过了isDone()则为true，为此判断isDone()知道complete()是否已经执行过，防止事件重复触发
         complete(started.get());//cny_note CompletableFuture#complete用于通知CompletableFuture的实例对应的任务线程直接完成任务。从而触发任务完成后续的事件
         if (listener != null) listener.onSuccess(args);
     }

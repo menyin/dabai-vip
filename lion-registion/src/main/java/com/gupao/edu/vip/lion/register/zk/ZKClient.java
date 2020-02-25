@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * cny_note zookeeper的Acl控制学习详见cblog 《ZooKeeper 笔记(5) ACL(Access Control List)访问控制列表》
+ *                                     csdn 《使用Java API、Curator操作zookeeper的acl权限》
  *
  */
 public class ZKClient extends BaseService {
@@ -66,7 +67,7 @@ public class ZKClient extends BaseService {
 //        if (!client.blockUntilConnected(10, TimeUnit.MINUTES)) {//cny_note 阻塞知道连接上或者超时抛异常
             throw new ZKException("init zk error, config=" + zkConfig);
         }
-        initLocalCache(zkConfig.getWatchPath());
+        initLocalCache(zkConfig.getWatchPath());//cny_note利用zookeeper的监控做的缓存
         addConnectionStateListener();
         Logs.RSD.info("zk client start success, server lists is:{}", zkConfig.getHosts());
         listener.onSuccess(zkConfig.getHosts());
@@ -116,10 +117,10 @@ public class ZKClient extends BaseService {
              * super: 在这种scheme情况下，对应的id拥有超级权限，可以做任何事情(cdrwa)
              */
             builder.authorization("digest", zkConfig.getDigest().getBytes(Constants.UTF_8));//
-            builder.aclProvider(new ACLProvider() {
+            builder.aclProvider(new ACLProvider() {//cny_note 即一个权限的一个供应者，也可以通过client.setACL().withACL(acls).forPath("/curatorNode");设置权限
                 @Override
-                public List<ACL> getDefaultAcl() {//cny_note 应该是设置全局默认的权限列表
-                    return ZooDefs.Ids.CREATOR_ALL_ACL;
+                public List<ACL> getDefaultAcl() {//cny_note 应该是设置全局默认的权限列表，有点像白名单。在zookeeper服务器应该已经添加了这些用户名单，所以118行的zkConfig.getDigest()并没有密码，只有用户名
+                    return ZooDefs.Ids.CREATOR_ALL_ACL;//cny_note 进源码可看到ACL的perm值为31，二进制位111111，分别代表adcwr
                 }
 
                 @Override

@@ -179,6 +179,11 @@ public final class Utils {
         }
     }
 
+    /**
+     * cny_note 获取线程池的相关信息
+     * @param executor ThreadPoolExecutor类型线程池
+     * @return
+     */
     public static Map<String, Object> getPoolInfo(ThreadPoolExecutor executor) {
         Map<String, Object> info = new HashMap<>(5);
         info.put("corePoolSize", executor.getCorePoolSize());
@@ -189,6 +194,11 @@ public final class Utils {
         return info;
     }
 
+    /**
+     * cny_note 获取线程池的相关信息
+     * @param executors EventLoopGroup类型线程池
+     * @return
+     */
     public static Map<String, Object> getPoolInfo(EventLoopGroup executors) {
         Map<String, Object> info = new HashMap<>(3);
         int poolSize = 0, queueSize = 0, activeCount = 0;

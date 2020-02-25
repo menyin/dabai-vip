@@ -32,8 +32,8 @@ public final class PacketDecoder extends ByteToMessageDecoder {
      */
     @Override
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) throws Exception {
-        decodeHeartbeat(in, out);
-        decodeFrames(in, out);
+        decodeHeartbeat(in, out);//cny_note 先判断能否并读取到心跳包
+        decodeFrames(in, out);//读取
     }
 
     /**
