@@ -19,7 +19,7 @@
 *.tar.gz
 *.rar
 
-target/**
+target/
 .idea/**
 out/**
 *.iml
