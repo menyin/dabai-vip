@@ -69,7 +69,7 @@ public final class ConnClientChannelHandler extends ChannelInboundHandlerAdapter
 
         connection.init(ctx.channel(), true);
         if (perfTest) {
-            handshake();
+            handshake();//cny_note 客户端和服务端通道建立后，先发送握手消息
         } else {
             tryFastConnect();
         }
@@ -231,6 +231,7 @@ public final class ConnClientChannelHandler extends ChannelInboundHandlerAdapter
 
     private void handshake() {
         HandshakeMessage message = new HandshakeMessage(connection);//**cny_note 大白文档中描述的密钥交换过程，第一步公钥加密R1其实是加密整个消息的body。而公钥加密的算法是用getCipher()得到
+        //***如果当前程序配置文件有配置公钥则会生成一个对应的加密器，在HandshakeMessage的基类BaseMessage会判断自身有无实例化一个加密器（getCipher()!=null），有则进行加密。即消息体已经携带了公钥。
         message.clientKey = clientConfig.getClientKey();
         message.iv = clientConfig.getIv();
         message.clientVersion = clientConfig.getClientVersion();
