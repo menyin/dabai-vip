@@ -130,6 +130,9 @@ public final class GatewayServer extends NettyTCPServer {
          * 当buffer的大小超过高水位线的时候对应channel的isWritable就会变成false，
          * 当buffer的大小低于低水位线的时候，isWritable就会变成true。所以应用应该判断isWritable，如果是false就不要再写数据了。
          * 高水位线和低水位线是字节数，默认高水位是64K，低水位是32K，我们可以根据我们的应用需要支持多少连接数和系统资源进行合理规划。
+         * cny:当写缓冲区的字节数低于低水位线时，Netty 会尝试将更多的数据写入缓冲区，以提高数据传输效率；
+         *     当写缓冲区的字节数高于高水位线时，Netty 会暂停写入操作(即isWritable=false)，以避免写入过多数据导致内存溢出等问题。
+         *     注：高于高水位线时，isWritable=false，此时调用通道对象channel.isWritable()会返回false，可以用来控制写入
          */
         if (gateway_server_low > 0 && gateway_server_high > 0) {
             b.childOption(ChannelOption.WRITE_BUFFER_WATER_MARK, new WriteBufferWaterMark(
